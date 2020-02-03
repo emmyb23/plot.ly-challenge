@@ -4,17 +4,20 @@ function buildMetadata(sample) {
   var metadataURL = "/metadata/" + sample;
   var panelMetadata = d3.select("#sample-metadata");
 
-//   console.log(meatdataURL);
+    //   console.log(meatdataURL);
 
   // clear existing metadata
   panelMetadata.html("");
-  d3.json(metadataURL).then(function (data) {
+  d3.json("./data/samples.json").then(function (data) {
+
     Object.entries(data).forEach(([key, value]) => {
       panelMetadata.append("h5").text(`${key}: ${value}`);
     });
 
 
+  })
 }
+
 
 function buildCharts(sample) {
 
@@ -25,7 +28,7 @@ function buildCharts(sample) {
 
 
     
-// bar chart valuse= sample_values, labels= otu_ids, hovertext=otu_labels
+  // bar chart valuse= sample_values, labels= otu_ids, hovertext=otu_labels
     var trace2 = [{
       values: data.sample_values.slice(0, 10),
       labels: data.otu_ids.slice(0, 10),
@@ -92,5 +95,4 @@ function optionChanged(newSample) {
   buildCharts(newSample);
   buildMetadata(newSample);
 }
-
 init();
